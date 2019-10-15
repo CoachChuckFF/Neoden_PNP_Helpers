@@ -8,12 +8,12 @@
 // THIS PROGRAM IS PROVIDED AS IS AND WITHOUT WARRANTY OF ANY KIND, EXPRESSED OR IMPLIED, MAY RESULT IN DEATH
 
 real detectX = 350.0; //This is the number on the machine
-real detectXOffset = -5.15; //This is the diffrence between detectX and 0,0
-real xOffset = detectX + detectXOffset;
+real detectXOffset = 100; //This is the diffrence between detectX and 0,0
+real xOffset = detectX - detectXOffset;
 
-real detectY = 350.0; //This is the number on the machine
-real detectYOffset = 0.56; //This is the diffrence between detectY and 0,0
-real yOffset = detectY + detectYOffset;
+real detectY = 350.0;
+real detectYOffset = 200;
+real yOffset = detectY - detectYOffset;
 
 if (board) board(B) {
 
@@ -33,6 +33,7 @@ if (board) board(B) {
                 ymax = xmax,
                 ymin = xmin;
             real angle = 0.0;
+            real preAngle = 0.0;
 
             isSmd = 0;
 
@@ -45,7 +46,8 @@ if (board) board(B) {
                     if (C.x < xmin) xmin = C.x;
                     if (C.y < ymin) ymin = C.y;
 
-                    angle = (E.angle > 180.0) ? (E.angle - 360.0) : E.angle;
+                    preAngle = E.angle;
+                    angle = (preAngle> 180.0) ? (preAngle - 360.0) : preAngle;
                 }
             }
 
@@ -57,9 +59,9 @@ if (board) board(B) {
                 printf("%s,", E.name);
                 printf("%s,", E.value);
                 printf("%s,", E.package.name);
-                printf("%4.2f,", yOffset - u2mm((ymin + ymax)/2));
                 printf("%4.2f,", xOffset + u2mm((xmin + xmax)/2));
-                printf("%3.2f,", angle); //Angle - double check this
+                printf("%4.2f,", yOffset + u2mm((ymin + ymax)/2));
+                printf("%3.2f,", angle);
                 printf("No,"); //Skip
                 printf("\n");
 

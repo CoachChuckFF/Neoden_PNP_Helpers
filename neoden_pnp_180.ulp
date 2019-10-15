@@ -33,6 +33,7 @@ if (board) board(B) {
                 ymax = xmax,
                 ymin = xmin;
             real angle = 0.0;
+            real preAngle = 0.0;
 
             isSmd = 0;
 
@@ -45,7 +46,8 @@ if (board) board(B) {
                     if (C.x < xmin) xmin = C.x;
                     if (C.y < ymin) ymin = C.y;
 
-                    angle = (E.angle > 180.0) ? (E.angle - 360.0) : E.angle;
+                    preAngle = E.angle + 180.0;
+                    angle = (preAngle> 180.0) ? (preAngle - 360.0) : preAngle;
                 }
             }
 
@@ -59,7 +61,7 @@ if (board) board(B) {
                 printf("%s,", E.package.name);
                 printf("%4.2f,", xOffset - u2mm((xmin + xmax)/2));
                 printf("%4.2f,", yOffset - u2mm((ymin + ymax)/2));
-                printf("%3.2f,", angle); //Angle - double check this
+                printf("%3.2f,", angle);
                 printf("No,"); //Skip
                 printf("\n");
 
